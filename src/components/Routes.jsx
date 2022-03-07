@@ -1,12 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Search from './pages/Search';
-import Album from './pages/Album';
-import Favorites from './pages/Favorites';
-import Profiles from './pages/Profile';
-import ProfilesEdit from './pages/ProfileEdit';
-import NotFound from './pages/NotFound';
+import Login from '../pages/Login';
+import Search from '../pages/Search';
+import Album from '../pages/Album';
+import Favorites from '../pages/Favorites';
+import Profiles from '../pages/Profile';
+import ProfilesEdit from '../pages/ProfileEdit';
+import NotFound from '../pages/NotFound';
 
 class Routes extends React.Component {
   render() {
