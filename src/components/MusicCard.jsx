@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 class MusicCard extends React.Component {
   constructor() {
@@ -18,6 +18,10 @@ class MusicCard extends React.Component {
     this.listaFavorites();
   }
 
+  componentDidUpdate() {
+
+  }
+
   async listaFavorites() {
     const lista = await getFavoriteSongs();
     this.setState({
@@ -27,16 +31,23 @@ class MusicCard extends React.Component {
 
   async favoritarMusic(event) {
     const { listaMusic } = this.props;
+    const { checked } = this.state;
     const musicas = listaMusic.filter((objeto) => objeto.trackName)
       .find((musica) => musica.trackId === +event.target.value);
     this.setState({
       loading: true,
     });
-    await addSong(musicas);
-    this.setState((stateAnt) => ({
-      loading: false,
-      checked: [...stateAnt.checked, musicas],
-    }));
+    return checked.some((id) => id.trackId === musicas.trackId)
+      ? (await removeSong(musicas),
+      this.setState((stateAnt) => ({
+        loading: false,
+        checked: stateAnt.checked.filter((objeto) => objeto !== musicas),
+      })))
+      : (await addSong(musicas),
+      this.setState((stateAnt) => ({
+        loading: false,
+        checked: [...stateAnt.checked, musicas],
+      })));
   }
 
   render() {
