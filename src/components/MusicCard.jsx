@@ -14,19 +14,15 @@ class MusicCard extends React.Component {
     this.listaFavorites = this.listaFavorites.bind(this);
   }
 
-  componentDidMount() {
-    this.listaFavorites();
-  }
-
-  componentDidUpdate() {
-    this.listaFavorites();
+  async componentDidMount() {
+    this.setState({
+      checked: await this.listaFavorites(),
+    });
   }
 
   async listaFavorites() {
     const lista = await getFavoriteSongs();
-    this.setState({
-      checked: lista,
-    });
+    return lista;
   }
 
   async favoritarMusic(event) {
@@ -41,10 +37,12 @@ class MusicCard extends React.Component {
       ? (await removeSong(musicas),
       this.setState({
         loading: false,
+        checked: await this.listaFavorites(),
       }))
       : (await addSong(musicas),
       this.setState({
         loading: false,
+        checked: await this.listaFavorites(),
       }));
   }
 
@@ -81,7 +79,8 @@ class MusicCard extends React.Component {
                       data-testid={ `checkbox-music-${musicas.trackId}` }
                       id={ musicas.trackId }
                       type="checkbox"
-                      checked={ checked.some((id) => id.trackId === musicas.trackId) }
+                      checked={ checked
+                        .some((objeto) => objeto.trackId === musicas.trackId) }
                     />
                   </label>
                 </div>
