@@ -19,7 +19,7 @@ class MusicCard extends React.Component {
   }
 
   componentDidUpdate() {
-
+    this.listaFavorites();
   }
 
   async listaFavorites() {
@@ -39,15 +39,13 @@ class MusicCard extends React.Component {
     });
     return checked.some((id) => id.trackId === musicas.trackId)
       ? (await removeSong(musicas),
-      this.setState((stateAnt) => ({
+      this.setState({
         loading: false,
-        checked: stateAnt.checked.filter((objeto) => objeto !== musicas),
-      })))
+      }))
       : (await addSong(musicas),
-      this.setState((stateAnt) => ({
+      this.setState({
         loading: false,
-        checked: [...stateAnt.checked, musicas],
-      })));
+      }));
   }
 
   render() {
