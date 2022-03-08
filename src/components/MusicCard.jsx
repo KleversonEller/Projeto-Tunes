@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class MusicCard extends React.Component {
   constructor() {
@@ -11,16 +11,31 @@ class MusicCard extends React.Component {
       checked: [],
     };
     this.favoritarMusic = this.favoritarMusic.bind(this);
+    this.listaFavorites = this.listaFavorites.bind(this);
+  }
+
+  componentDidMount() {
+    this.listaFavorites();
+  }
+
+  async listaFavorites() {
+    const lista = await getFavoriteSongs();
+    this.setState({
+      checked: lista,
+    });
   }
 
   async favoritarMusic(event) {
+    const { listaMusic } = this.props;
+    const musicas = listaMusic.filter((objeto) => objeto.trackName)
+      .find((musica) => musica.trackId === +event.target.value);
     this.setState({
       loading: true,
     });
-    await addSong(event.target.value);
+    await addSong(musicas);
     this.setState((stateAnt) => ({
       loading: false,
-      checked: [...stateAnt.checked, event.target.id],
+      checked: [...stateAnt.checked, musicas],
     }));
   }
 
@@ -52,12 +67,12 @@ class MusicCard extends React.Component {
                   <label htmlFor={ musicas.trackId }>
                     Favorita
                     <input
-                      value={ musicas }
+                      value={ musicas.trackId }
                       onChange={ this.favoritarMusic }
                       data-testid={ `checkbox-music-${musicas.trackId}` }
                       id={ musicas.trackId }
                       type="checkbox"
-                      checked={ checked.some((id) => +id === musicas.trackId) }
+                      checked={ checked.some((id) => id.trackId === musicas.trackId) }
                     />
                   </label>
                 </div>
