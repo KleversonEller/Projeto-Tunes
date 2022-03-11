@@ -15,35 +15,36 @@ class MusicCard extends React.Component {
   }
 
   async componentDidMount() {
-    this.setState({
-      checked: await this.listaFavorites(),
-    });
+    this.listaFavorites();
   }
 
   async listaFavorites() {
     const lista = await getFavoriteSongs();
-    return lista;
+    const ids = lista.map((objeto) => objeto.trackId);
+    this.setState({
+      checked: ids,
+    });
   }
 
   async favoritarMusic(event) {
     const { listaMusic } = this.props;
     const { checked } = this.state;
-    const musicas = listaMusic.filter((objeto) => objeto.trackName)
+    const musicas = listaMusic
       .find((musica) => musica.trackId === +event.target.value);
     this.setState({
       loading: true,
     });
-    return checked.some((id) => id.trackId === musicas.trackId)
+    return checked.some((id) => id === musicas.trackId)
       ? (await removeSong(musicas),
-      this.setState({
+      this.setState((prev) => ({
         loading: false,
-        checked: await this.listaFavorites(),
-      }))
+        checked: prev.checked.filter((id) => id !== +event.target.value),
+      })))
       : (await addSong(musicas),
-      this.setState({
+      this.setState((prev) => ({
         loading: false,
-        checked: await this.listaFavorites(),
-      }));
+        checked: [...prev.checked, +event.target.value],
+      })));
   }
 
   render() {
@@ -79,8 +80,7 @@ class MusicCard extends React.Component {
                       data-testid={ `checkbox-music-${musicas.trackId}` }
                       id={ musicas.trackId }
                       type="checkbox"
-                      checked={ checked
-                        .some((objeto) => objeto.trackId === musicas.trackId) }
+                      checked={ checked.some((id) => id === musicas.trackId) }
                     />
                   </label>
                 </div>

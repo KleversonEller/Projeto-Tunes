@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import MusicCard from '../components/MusicCard';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { getFavoriteSongs, removeSong, addSong } from '../services/favoriteSongsAPI';
 import Loading from '../components/Loading';
 
 class Favorites extends React.Component {
@@ -9,34 +8,91 @@ class Favorites extends React.Component {
     super();
     this.state = {
       loading: false,
-      saveList: [],
+      checked: [],
+      listaMusic: [],
     };
-    this.getList = this.getList.bind(this);
+    this.favoritarMusic = this.favoritarMusic.bind(this);
+    this.listaFavorites = this.listaFavorites.bind(this);
   }
 
-  componentDidMount() {
-    this.getList();
+  async componentDidMount() {
+    this.listaFavorites();
   }
 
-  async getList() {
+  async listaFavorites() {
     this.setState({
       loading: true,
     });
-    const list = await getFavoriteSongs();
+    const lista = await getFavoriteSongs();
+    const ids = lista.map((objeto) => objeto.trackId);
     this.setState({
-      saveList: list,
+      checked: ids,
+      listaMusic: lista,
       loading: false,
     });
   }
 
+  async favoritarMusic(event) {
+    this.setState({
+      loading: true,
+    });
+    const { checked, listaMusic } = this.state;
+    const lista = await getFavoriteSongs();
+    const musicas = listaMusic
+      .find((musica) => musica.trackId === +event.target.value);
+    return checked.some((id) => id === musicas.trackId)
+      ? (await removeSong(musicas),
+      this.setState((prev) => ({
+        loading: false,
+        checked: prev.checked.filter((id) => id !== +event.target.value),
+        listaMusic: prev.listaMusic.filter((id) => id.trackId !== +event.target.value),
+      })))
+      : (await addSong(musicas),
+      this.setState((prev) => ({
+        loading: false,
+        checked: [...prev.checked, +event.target.value],
+        listaMusic: lista,
+      })));
+  }
+
   render() {
-    const { loading, saveList } = this.state;
+    const { loading, checked, listaMusic } = this.state;
     return (
       <div data-testid="page-favorites">
         <Header />
         {loading
           ? <Loading />
-          : <MusicCard listaMusic={ saveList } />}
+          : (
+            listaMusic.filter((objeto) => objeto.trackName)
+              .map((musicas) => (
+                <div key={ musicas.trackId }>
+                  <p>
+                    {musicas.trackName}
+                  </p>
+                  <audio
+                    data-testid="audio-component"
+                    src={ musicas.previewUrl }
+                    controls
+                  >
+                    <track kind="captions" />
+                    O seu navegador não suporta o elemento
+                    <code>audio</code>
+                    .
+                  </audio>
+                  <br />
+                  <label htmlFor={ musicas.trackId }>
+                    Favorita
+                    <input
+                      value={ musicas.trackId }
+                      onChange={ this.favoritarMusic }
+                      data-testid={ `checkbox-music-${musicas.trackId}` }
+                      id={ musicas.trackId }
+                      type="checkbox"
+                      checked={ checked.some((id) => id === musicas.trackId) }
+                    />
+                  </label>
+                </div>
+              )))}
       </div>
     );
   }

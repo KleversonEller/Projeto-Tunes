@@ -15,12 +15,11 @@ class ProfilesEdit extends React.Component {
       description: '',
       saveBtn: true,
       userAtt: {},
-      redirect: <Loading />,
+      redirect: false,
     };
     this.userGet = this.userGet.bind(this);
     this.validateBtn = this.validateBtn.bind(this);
     this.inputsValues = this.inputsValues.bind(this);
-    // this.saveUser = this.saveUser.bind(this);
     this.redirecionando = this.redirecionando.bind(this);
   }
 
@@ -52,14 +51,16 @@ class ProfilesEdit extends React.Component {
     });
   }
 
-  async redirecionando() {
+  async redirecionando(event) {
+    event.preventDefault();
     const { userAtt } = this.state;
     this.setState({
       loading: true,
-    });
-    await updateUser(userAtt);
-    this.setState({
-      redirect: <Redirect to="/profile" />,
+    }, async () => {
+      await updateUser(userAtt);
+      this.setState({
+        redirect: true,
+      });
     });
   }
 
@@ -83,7 +84,7 @@ class ProfilesEdit extends React.Component {
       <div data-testid="page-profile-edit">
         <Header />
         {loading
-          ? redirect
+          ? <Loading />
           : (
             <div>
               <label htmlFor="name">
@@ -140,6 +141,7 @@ class ProfilesEdit extends React.Component {
               </button>
             </div>
           )}
+        {redirect && <Redirect to="/profile" />}
       </div>
     );
   }
