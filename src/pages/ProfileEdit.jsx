@@ -13,13 +13,11 @@ class ProfilesEdit extends React.Component {
       email: '',
       image: '',
       description: '',
-      saveBtn: true,
-      userAtt: {},
       redirect: false,
     };
-    this.userGet = this.userGet.bind(this);
-    this.validateBtn = this.validateBtn.bind(this);
     this.inputsValues = this.inputsValues.bind(this);
+    this.validateBtn = this.validateBtn.bind(this);
+    this.userGet = this.userGet.bind(this);
     this.redirecionando = this.redirecionando.bind(this);
   }
 
@@ -30,7 +28,7 @@ class ProfilesEdit extends React.Component {
   inputsValues(event) {
     this.setState({
       [event.target.name]: event.target.value,
-    }, this.validateBtn);
+    });
   }
 
   validateBtn() {
@@ -38,48 +36,40 @@ class ProfilesEdit extends React.Component {
     const valida = [state.name, state.email, state.description, state.image];
     const validado = valida.every((valor) => valor.length > 0)
     && /\S+@\S+\.\S+/.test(state.email);
-    this.setState((prev) => ({
-      userAtt: {
-        name: prev.name,
-        email: prev.email,
-        image: prev.image,
-        description: prev.description,
-      },
-    }));
-    return validado && this.setState({
-      saveBtn: false,
+    return !validado;
+  }
+
+  userGet() {
+    this.setState({
+      loading: true,
+    }, async () => {
+      const usuario = await getUser();
+      this.setState({
+        name: usuario.name,
+        email: usuario.email,
+        image: usuario.image,
+        description: usuario.description,
+        loading: false,
+      });
     });
   }
 
   async redirecionando(event) {
     event.preventDefault();
-    const { userAtt } = this.state;
     this.setState({
-      loading: true,
-    }, async () => {
-      await updateUser(userAtt);
-      this.setState({
-        redirect: true,
-      });
+      redirect: true,
     });
-  }
-
-  async userGet() {
-    this.setState({
-      loading: true,
-    });
-    const usuario = await getUser();
-    this.setState({
-      name: usuario.name,
-      email: usuario.email,
-      image: usuario.image,
-      description: usuario.description,
-      loading: false,
+    const { state } = this;
+    await updateUser({
+      name: state.name,
+      email: state.email,
+      image: state.image,
+      description: state.description,
     });
   }
 
   render() {
-    const { loading, saveBtn, name, email, image, description, redirect } = this.state;
+    const { loading, name, email, image, description, redirect } = this.state;
     return (
       <div data-testid="page-profile-edit">
         <Header />
@@ -133,7 +123,7 @@ class ProfilesEdit extends React.Component {
               </label>
               <button
                 onClick={ this.redirecionando }
-                disabled={ saveBtn }
+                disabled={ this.validateBtn() }
                 data-testid="edit-button-save"
                 type="submit"
               >
