@@ -16,7 +16,7 @@
   width: 300px;
 }
 
-input {
+.input_login {
   background-color: var(--accent-color);
   border: 1px solid var(--accent-color);
   border-radius: 6px;
@@ -29,7 +29,7 @@ input {
 }
 
 
-button {
+.button_login {
   background-color: var(--color-1);
   border: none;
   border-radius: 6px;
@@ -41,6 +41,6 @@ button {
   width: 90%;
 }
 
-button:active {
+.button_login:active {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6);
 }

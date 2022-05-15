@@ -59,6 +59,7 @@ class Search extends React.Component {
             ? (
               <form className={ style.container_search }>
                 <input
+                  className={ style.input_search }
                   value={ valorPesquisado }
                   name="valorPesquisado"
                   data-testid="search-artist-input"
@@ -66,6 +67,7 @@ class Search extends React.Component {
                   onChange={ this.pesquisaInput }
                 />
                 <button
+                  className={ style.button_search }
                   type="button"
                   data-testid="search-artist-button"
                   onClick={ this.getAlbum }

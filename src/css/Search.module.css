@@ -10,11 +10,11 @@
   width: 90%;
 }
 
-input {
+.input_search {
   width: 70%;
 }
 
-button {
+.button_search {
   width: 20%;
 }
 
