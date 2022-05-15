@@ -53,7 +53,7 @@ class MusicCard extends React.Component {
     return (
       <div>
         {loading
-          ? <Loading />
+          ? <Loading wid="250px" />
           : (
             listaMusic.filter((objeto) => objeto.trackName)
               .map((musicas) => (

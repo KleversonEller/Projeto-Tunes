@@ -35,7 +35,7 @@ class Profiles extends React.Component {
       <div data-testid="page-profile">
         <Header />
         {loading
-          ? <Loading />
+          ? <Loading wid="250" />
           : (
             <div>
               <p>

@@ -61,7 +61,7 @@ class Favorites extends React.Component {
       <div data-testid="page-favorites">
         <Header />
         {loading
-          ? <Loading />
+          ? <Loading wid="250px" />
           : (
             listaMusic.filter((objeto) => objeto.trackName)
               .map((musicas) => (

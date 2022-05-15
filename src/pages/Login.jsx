@@ -2,6 +2,8 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import Loading from '../components/Loading';
+import logo from '../images/logo.svg';
+import style from '../css/Login.module.css';
 
 class Login extends React.Component {
   constructor() {
@@ -10,7 +12,7 @@ class Login extends React.Component {
       validateBtn: true,
       inputLogin: '',
       logado: false,
-      loading: <Loading />,
+      loading: <Loading wid="250px" />,
     };
     this.btnValidate = this.btnValidate.bind(this);
     this.loginInput = this.loginInput.bind(this);
@@ -50,22 +52,21 @@ class Login extends React.Component {
   render() {
     const { state } = this;
     return (
-      <div data-testid="page-login">
+      <div data-testid="page-login" className={ style.container }>
         {state.logado
           ? state.loading
           : (
-            <form>
-              <label htmlFor="name">
-                Login:
-                <input
-                  data-testid="login-name-input"
-                  id="name"
-                  type="text"
-                  name="inputLogin"
-                  value={ state.inputLogin }
-                  onChange={ this.loginInput }
-                />
-              </label>
+            <form className={ style.wrapper }>
+              <img src={ logo } alt="Ilustração de ondas sonoras em formato de torre" />
+              <input
+                data-testid="login-name-input"
+                placeholder="Login"
+                id="name"
+                type="text"
+                name="inputLogin"
+                value={ state.inputLogin }
+                onChange={ this.loginInput }
+              />
               <button
                 disabled={ state.validateBtn }
                 data-testid="login-submit-button"

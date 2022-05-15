@@ -74,7 +74,7 @@ class ProfilesEdit extends React.Component {
       <div data-testid="page-profile-edit">
         <Header />
         {loading
-          ? <Loading />
+          ? <Loading wid="250px" />
           : (
             <div>
               <label htmlFor="name">
