@@ -59,7 +59,6 @@ class Login extends React.Component {
             <form className={ style.wrapper }>
               <img src={ logo } alt="Ilustração de ondas sonoras em formato de torre" />
               <input
-                className={ style.input_login }
                 data-testid="login-name-input"
                 placeholder="Login"
                 id="name"
@@ -69,7 +68,6 @@ class Login extends React.Component {
                 onChange={ this.loginInput }
               />
               <button
-                className={ style.button_login }
                 disabled={ state.validateBtn }
                 data-testid="login-submit-button"
                 type="submit"

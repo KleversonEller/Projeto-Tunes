@@ -10,6 +10,11 @@
   width: 90%;
 }
 
+.container_menu {
+  display: flex;
+  flex-direction: column;
+}
+
 .input_search {
   width: 70%;
 }
@@ -20,9 +25,14 @@
 
 .container_cards {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  margin: 5%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 85vw;
+}
+
+.container_cards::-webkit-scrollbar {
+  display: none;
 }
 
 h1 {
@@ -30,7 +40,7 @@ h1 {
 }
 
 .image_cards {
-  margin: 30px 40px 10px;
+  margin: 30px 15px 10px;
   width: 150px;
 }
 
@@ -38,7 +48,28 @@ h1 {
   color: var(--secondary-color);
   display: flex;
   flex-direction: column;
-  margin-left: 40px;
+  margin-left: 15px;
   text-align: center;
   width: 150px;
+}
+
+.container_button {
+  align-self: flex-end;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15vh;
+  width: 100px;
+}
+
+.container_button button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  height: 45px;
+  width: 45px;
+}
+
+.container_button button:active {
+  border-radius: 50px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6);
 }
