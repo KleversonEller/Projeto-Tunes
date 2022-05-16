@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Header from '../components/Header';
+import AlbunsDefault from '../services/albunsDefault';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Loading from '../components/Loading';
 import style from '../css/Search.module.css';
@@ -12,7 +13,8 @@ class Search extends React.Component {
     this.state = {
       valorPesquisado: '',
       pesquisando: true,
-      album: '',
+      album: AlbunsDefault,
+      title: 'Álbuns para você',
     };
 
     this.scrollBar = React.createRef();
@@ -34,7 +36,9 @@ class Search extends React.Component {
     this.scrollBar.current.scrollLeft += this.scrollBar.current.offsetWidth;
   }
 
-  async getAlbum() {
+  async getAlbum(event) {
+    event.preventDefault();
+    if (this.scrollBar.current !== null) this.scrollBar.current.scrollLeft = 0;
     const { valorPesquisado } = this.state;
     this.setState({
       pesquisando: false,
@@ -43,6 +47,7 @@ class Search extends React.Component {
     this.setState({
       album: albuns,
       valorPesquisado: '',
+      title: `Resultados da busca para "${valorPesquisado}"`,
     }, this.validaAlbum);
   }
 
@@ -65,7 +70,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { valorPesquisado, pesquisando, album } = this.state;
+    const { valorPesquisado, pesquisando, album, title } = this.state;
     return (
       <div>
         <Header />
@@ -83,7 +88,7 @@ class Search extends React.Component {
                 />
                 <button
                   className={ style.button_search }
-                  type="button"
+                  type="submit"
                   data-testid="search-artist-button"
                   onClick={ this.getAlbum }
                 >
@@ -95,18 +100,21 @@ class Search extends React.Component {
             ? (
               <div className={ style.container_menu }>
                 <div className={ style.container_button }>
-                  <button
-                    type="button"
-                    onClick={ this.handleLeft }
-                  >
-                    <BsFillCaretLeftFill />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={ this.handleRight }
-                  >
-                    <BsFillCaretRightFill />
-                  </button>
+                  <samp className={ style.title }>{title}</samp>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={ this.handleLeft }
+                    >
+                      <BsFillCaretLeftFill />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={ this.handleRight }
+                    >
+                      <BsFillCaretRightFill />
+                    </button>
+                  </div>
                 </div>
                 <div className={ style.container_cards } ref={ this.scrollBar }>
                   {album.map((objeto) => (

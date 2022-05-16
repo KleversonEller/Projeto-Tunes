@@ -2,7 +2,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .container_user {
@@ -10,6 +10,7 @@
   background-color: var(--secondary-color);
   display: flex;
   justify-content: space-between;
+  padding: 2vh 0;
   padding-right: 3%;
   width: 100%;
 }
