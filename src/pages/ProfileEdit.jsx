@@ -58,16 +58,23 @@ class ProfilesEdit extends React.Component {
 
   async redirecionando(event) {
     event.preventDefault();
-    this.setState({
-      redirect: true,
-    });
-    const { state } = this;
-    await updateUser({
-      name: state.name,
-      email: state.email,
-      image: state.image,
-      description: state.description,
-    });
+    const { name } = event.target;
+    if (name === 'cancelar') {
+      this.setState({
+        redirect: true,
+      });
+    } else {
+      this.setState({
+        redirect: true,
+      });
+      const { state } = this;
+      await updateUser({
+        name: state.name,
+        email: state.email,
+        image: state.image,
+        description: state.description,
+      });
+    }
   }
 
   render() {
@@ -128,14 +135,25 @@ class ProfilesEdit extends React.Component {
                     />
                   </div>
                 </div>
-                <button
-                  onClick={ this.redirecionando }
-                  disabled={ this.validateBtn() }
-                  data-testid="edit-button-save"
-                  type="submit"
-                >
-                  Salvar
-                </button>
+                <div className={ style.container_buttons }>
+                  <button
+                    name="cancelar"
+                    onClick={ this.redirecionando }
+                    data-testid="edit-button-save"
+                    type="submit"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    name="salvar"
+                    onClick={ this.redirecionando }
+                    disabled={ this.validateBtn() }
+                    data-testid="edit-button-save"
+                    type="submit"
+                  >
+                    Salvar
+                  </button>
+                </div>
               </div>
             )}
         </div>
