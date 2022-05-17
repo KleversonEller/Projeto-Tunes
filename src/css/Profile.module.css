@@ -1,0 +1,54 @@
+.container {
+    width: 100vw;
+    height: 80vh;
+}
+
+.container_perfil, .container_user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+}
+
+.container_user {
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    background-color: var(--accent-color);
+    margin-bottom: 25px;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.container_perfil {
+    justify-content: center;
+}
+
+.container_perfil div button {
+    width: 15vw;
+}
+
+.image_user {
+    width: 15vw;
+    height: 20vh;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.name_user, .email_user {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.name_user {
+    font-size: xx-large;
+}
+
+.description_user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    height: 30%;
+}

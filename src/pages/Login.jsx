@@ -12,7 +12,7 @@ class Login extends React.Component {
       validateBtn: true,
       inputLogin: '',
       logado: false,
-      loading: <Loading wid="250px" />,
+      loading: <Loading wid="300px" />,
     };
     this.btnValidate = this.btnValidate.bind(this);
     this.loginInput = this.loginInput.bind(this);
