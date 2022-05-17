@@ -29,6 +29,7 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   width: 85vw;
+  margin-top: 30px;
 }
 
 .container_cards::-webkit-scrollbar {
@@ -40,7 +41,7 @@ h1 {
 }
 
 .image_cards {
-  margin: 30px 12px 10px;
+  margin: 10px 12px 10px;
   width: 150px;
 }
 
@@ -51,6 +52,11 @@ h1 {
   margin-left: 12px;
   text-align: center;
   width: 150px;
+}
+
+.titles_cards:first-child {
+  font-weight: bold;
+  font-size: large;
 }
 
 .container_button {
