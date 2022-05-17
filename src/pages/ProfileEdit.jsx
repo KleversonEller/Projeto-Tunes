@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { getUser, updateUser } from '../services/userAPI';
+import style from '../css/ProfileEdit.module.css';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 
@@ -71,66 +73,72 @@ class ProfilesEdit extends React.Component {
   render() {
     const { loading, name, email, image, description, redirect } = this.state;
     return (
-      <div data-testid="page-profile-edit">
+      <div data-testid="page-profile-edit" className={ style.container }>
         <Header />
-        {loading
-          ? <Loading wid="250px" />
-          : (
-            <div>
-              <label htmlFor="name">
-                Name:
-                <input
-                  name="name"
-                  onChange={ this.inputsValues }
-                  id="name"
-                  data-testid="edit-input-name"
-                  type="text"
-                  value={ name }
-                />
-              </label>
-              <label htmlFor="email">
-                E-mail:
-                <input
-                  name="email"
-                  onChange={ this.inputsValues }
-                  id="email"
-                  data-testid="edit-input-email"
-                  type="text"
-                  value={ email }
-                />
-              </label>
-              <label htmlFor="description">
-                Description:
-                <input
-                  name="description"
-                  onChange={ this.inputsValues }
-                  id="description"
-                  data-testid="edit-input-description"
-                  type="text"
-                  value={ description }
-                />
-              </label>
-              <label htmlFor="image">
-                URL Image:
-                <input
-                  name="image"
-                  onChange={ this.inputsValues }
-                  id="image"
-                  data-testid="edit-input-image"
-                  type="text"
-                  value={ image }
-                />
-              </label>
-              <button
-                onClick={ this.redirecionando }
-                disabled={ this.validateBtn() }
-                data-testid="edit-button-save"
-                type="submit"
-              >
-                Salvar
-              </button>
-            </div>
-          )}
+        <div className={ style.container_edit }>
+          {loading
+            ? <Loading wid="300px" />
+            : (
+              <div className={ style.container_edit }>
+                <div className={ style.container_infos }>
+                  <div className={ style.infos_input }>
+                    <label htmlFor="name">Name:</label>
+                    <input
+                      name="name"
+                      onChange={ this.inputsValues }
+                      id="name"
+                      data-testid="edit-input-name"
+                      type="text"
+                      value={ name }
+                    />
+                  </div>
+                  <div className={ style.infos_input }>
+                    <label htmlFor="email">E-mail:</label>
+                    <input
+                      name="email"
+                      onChange={ this.inputsValues }
+                      id="email"
+                      data-testid="edit-input-email"
+                      type="text"
+                      value={ email }
+                    />
+                  </div>
+                  <div className={ style.infos_textarea }>
+                    <label htmlFor="description">Description:</label>
+                    <textarea
+                      name="description"
+                      onChange={ this.inputsValues }
+                      id="description"
+                      data-testid="edit-input-description"
+                      type="text"
+                      rows="3"
+                      maxLength={ 150 }
+                      value={ description }
+                    />
+                  </div>
+                  <div className={ style.infos_input }>
+                    <label htmlFor="image">Image:</label>
+                    <input
+                      name="image"
+                      onChange={ this.inputsValues }
+                      id="image"
+                      data-testid="edit-input-image"
+                      type="text"
+                      value={ image }
+                    />
+                  </div>
+                </div>
+                <button
+                  onClick={ this.redirecionando }
+                  disabled={ this.validateBtn() }
+                  data-testid="edit-button-save"
+                  type="submit"
+                >
+                  Salvar
+                </button>
+              </div>
+            )}
+        </div>
         {redirect && <Redirect to="/profile" />}
       </div>
     );
