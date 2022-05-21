@@ -1,0 +1,21 @@
+.container {
+    background: center/70vh no-repeat url("../images/not-found.webp") ;
+    width: 100vw;
+    height: 100vh;
+    background-color: #313131;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5%;
+    font-size: xx-large;
+    color: white;
+}
+
+.container span:nth-child(2) {
+    font-size: large;
+}
+
+.link {
+    color: var(--color-1);
+}
