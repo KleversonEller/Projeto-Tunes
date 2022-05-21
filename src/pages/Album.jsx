@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import style from '../css/Album.module.css';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
 import Header from '../components/Header';
@@ -30,17 +31,15 @@ class Album extends React.Component {
     return (
       <div data-testid="page-album">
         <Header />
-        <div>
-          <p data-testid="artist-name">
+        <div className={ style.container }>
+          <span data-testid="artist-name">
             {album.length > 0 && album[0].artistName}
-          </p>
-          <p data-testid="album-name">
+          </span>
+          <span data-testid="album-name">
             {album.length > 0 && album[0].collectionName}
-            <br />
-            {album.length > 0 && album[0].artistName}
-          </p>
-          <MusicCard listaMusic={ album } />
+          </span>
         </div>
+        <MusicCard listaMusic={ album } />
       </div>
     );
   }

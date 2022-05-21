@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    margin-bottom: 30px;
+}
+
+.container span:first-child {
+    font-size: xx-large;
+    margin-bottom: 5px;
+}
