@@ -1,13 +1,21 @@
-.container {
+.title {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: x-large;
     margin-bottom: 30px;
+    font-size: x-large;
 }
 
-.container span:first-child {
+.title span:first-child {
     font-size: xx-large;
     margin-bottom: 5px;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 80vh;
 }

@@ -1,21 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import style from '../css/MusicCard.module.css';
-import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
+import { getFavoriteSongs, removeSong, addSong } from '../services/favoriteSongsAPI';
 
-class MusicCard extends React.Component {
+class FavoritesCard extends React.Component {
   constructor() {
     super();
     this.state = {
       checked: [],
+      listaMusic: [],
     };
     this.favoritarMusic = this.favoritarMusic.bind(this);
     this.listaFavorites = this.listaFavorites.bind(this);
     this.isChecked = this.isChecked.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.listaFavorites();
   }
 
@@ -24,22 +24,25 @@ class MusicCard extends React.Component {
     const ids = lista.map((objeto) => objeto.trackId);
     this.setState({
       checked: ids,
+      listaMusic: lista,
     });
   }
 
   async favoritarMusic(event) {
-    const { listaMusic } = this.props;
-    const { checked } = this.state;
+    const { checked, listaMusic } = this.state;
+    const lista = await getFavoriteSongs();
     const musicas = listaMusic
       .find((musica) => musica.trackId === +event.target.value);
     return checked.some((id) => id === musicas.trackId)
       ? (await removeSong(musicas),
       this.setState((prev) => ({
         checked: prev.checked.filter((id) => id !== +event.target.value),
+        listaMusic: prev.listaMusic.filter((id) => id.trackId !== +event.target.value),
       })))
       : (await addSong(musicas),
       this.setState((prev) => ({
         checked: [...prev.checked, +event.target.value],
+        listaMusic: lista,
       })));
   }
 
@@ -50,8 +53,7 @@ class MusicCard extends React.Component {
   }
 
   render() {
-    const { listaMusic } = this.props;
-    const { checked } = this.state;
+    const { checked, listaMusic } = this.state;
     return (
       <div className={ style.container }>
         {listaMusic.filter((objeto) => objeto.trackName)
@@ -93,8 +95,4 @@ class MusicCard extends React.Component {
   }
 }
 
-MusicCard.propTypes = {
-  listaMusic: PropTypes.arrayOf(PropTypes.object),
-}.isRequired;
-
-export default MusicCard;
+export default FavoritesCard;
