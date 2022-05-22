@@ -123,9 +123,6 @@ class Search extends React.Component {
                       key={ objeto.collectionId }
                       to={ `/album/${objeto.collectionId}` }
                     >
-                      <span className={ style.titles_cards }>
-                        {objeto.artistName}
-                      </span>
                       <img
                         className={ style.image_cards }
                         src={ objeto.artworkUrl100 }

@@ -35,7 +35,7 @@ class ProfilesEdit extends React.Component {
 
   validateBtn() {
     const { state } = this;
-    const valida = [state.name, state.email, state.description, state.image];
+    const valida = [state.name, state.email, state.image];
     const validado = valida.every((valor) => valor.length > 0)
     && /\S+@\S+\.\S+/.test(state.email);
     return !validado;
